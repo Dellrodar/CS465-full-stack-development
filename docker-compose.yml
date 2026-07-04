@@ -1,0 +1,19 @@
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: travlr-node:dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      DEBUG: travlr:*
+
+  mongodb:
+    image: mongo:7.0.30
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker/data/db:/data/db
