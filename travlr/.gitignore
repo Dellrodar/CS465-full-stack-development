@@ -59,7 +59,3 @@ typings/
 
 # next.js build output
 .next
-
-# Docker data
-docker/data/db/*
-!docker/data/db/.gitkeep
