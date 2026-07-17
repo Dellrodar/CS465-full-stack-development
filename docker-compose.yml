@@ -5,10 +5,16 @@ services:
       dockerfile: docker/Dockerfile
     image: travlr-node:dev
     restart: unless-stopped
+    command: npm run dev
+    volumes:
+      - ./travlr:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
       - "3000:3000"
     environment:
       DEBUG: travlr:*
+    depends_on:
+      - mongodb
 
   mongodb:
     image: mongo:7.0.30
