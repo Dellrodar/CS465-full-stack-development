@@ -13,6 +13,7 @@ services:
       - "3000:3000"
     environment:
       DEBUG: travlr:*
+      DB_HOST: mongodb
     depends_on:
       - mongodb
 
