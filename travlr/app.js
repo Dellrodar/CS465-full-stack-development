@@ -10,6 +10,8 @@ import indexRouter from './app_server/routes/index.js';
 import usersRouter from './app_server/routes/users.js';
 import travelRouter from './app_server/routes/travel.js';
 import roomsRouter from './app_server/routes/rooms.js';
+import apiRouter from './app_api/routes/index.js';
+import './app_api/models/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,6 +36,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/travel', travelRouter);
 app.use('/rooms', roomsRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
