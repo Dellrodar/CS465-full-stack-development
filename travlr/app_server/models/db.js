@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { createInterface} from 'readline';
+import { createInterface } from 'readline';
 import Trip from './travlr.js';
 
 const { connection, connect: mgconnect } = mongoose;
