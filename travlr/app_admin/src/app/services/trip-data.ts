@@ -1,4 +1,4 @@
-import { Injectable, Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Trip } from '../models/trip';
@@ -12,7 +12,15 @@ export class TripData {
 
     tripsUrl = 'http://localhost:3000/api/trips';
 
-    getTrips(): Observable<Trip[]> {
-        return this.http.get<Trip[]>(this.tripsUrl);
+    getTrips(tripCode: string = ''): Observable<Trip[]> {
+        return this.http.get<Trip[]>(this.tripsUrl + '/' + tripCode);
     }
+
+    addTrip(formData: Trip): Observable<Trip> {
+        return this.http.post<Trip>(this.tripsUrl, formData);
+    }
+
+    updateTrip(formData: Trip): Observable<Trip> {
+        return this.http.put<Trip>(this.tripsUrl + '/' + formData.code, formData);
+    };
 }

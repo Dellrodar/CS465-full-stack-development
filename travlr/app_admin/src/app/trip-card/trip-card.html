@@ -1,4 +1,4 @@
-<div class="card ml-4" style="width: 16rem;">
+<div class="card ml-4">
     <div class="card-header">{{ trip.name }}</div>
     <img src="assets/images/{{ trip.image }}"
         alt="trip thumbnail" class="card-img-top">
@@ -11,5 +11,8 @@
         </p>
         <p class="card-text" [innerHTML]="trip.description">
         </p>
+        <div>
+            <button (click)="editTrip(trip)" class="btn btn-info">Edit Trip</button>
+        </div>
     </div>
 </div>
