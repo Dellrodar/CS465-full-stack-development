@@ -17,6 +17,23 @@ services:
     depends_on:
       - mongodb
 
+  angular:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.angular
+    image: travlr-angular:dev
+    restart: unless-stopped
+    command: npm start -- --host 0.0.0.0 --poll 2000
+    volumes:
+      - ./travlr/app_admin:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "4200:4200"
+    environment:
+      NG_CLI_ANALYTICS: "false"
+    depends_on:
+      - node
+
   mongodb:
     image: mongo:7.0.30
     restart: unless-stopped

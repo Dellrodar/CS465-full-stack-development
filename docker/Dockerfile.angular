@@ -1,0 +1,11 @@
+FROM node:24-slim AS dev
+
+WORKDIR /usr/src/app
+
+COPY travlr/app_admin/package*.json ./
+
+RUN npm install
+
+COPY travlr/app_admin/ ./
+
+CMD [ "npm", "start", "--", "--host", "0.0.0.0" ]
