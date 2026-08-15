@@ -21,9 +21,11 @@
                         <a class="nav-link" routerLink="/reservations" routerLinkActive="active" ariaCurrentWhenActive="page">Reservations</a>
                     </li>
                 }
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/admin" routerLinkActive="active" ariaCurrentWhenActive="page">Admin</a>
-                </li>
+                @if (isAdmin()) {
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin" routerLinkActive="active" ariaCurrentWhenActive="page">Admin</a>
+                    </li>
+                }
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center justify-content-center gap-1" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">

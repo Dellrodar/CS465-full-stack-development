@@ -21,6 +21,10 @@ export class Navbar {
     return this.authenticationService.isLoggedIn();
   }
 
+  public isAdmin(): boolean {
+    return this.authenticationService.isAdmin();
+  }
+
   public openLogin(): void {
     this.authModal.open('login');
   }

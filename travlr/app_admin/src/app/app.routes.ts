@@ -11,6 +11,7 @@ import { AdminReservations } from './admin/admin-reservations/admin-reservations
 import { AdminUsers } from './admin/admin-users/admin-users';
 import { AdminSettings } from './admin/admin-settings/admin-settings';
 import { authGuard } from './utils/auth.guard';
+import { adminGuard } from './utils/admin.guard';
 
 export const routes: Routes = [{
     path: '',
@@ -32,8 +33,8 @@ export const routes: Routes = [{
 }, {
     path: 'admin',
     component: Admin,
-    canActivate: [authGuard],
-    canActivateChild: [authGuard],
+    canActivate: [adminGuard],
+    canActivateChild: [adminGuard],
     children: [{
         path: '',
         redirectTo: 'travel',

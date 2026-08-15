@@ -70,13 +70,18 @@ export class Authentication {
         return this.loggedIn() && this.hasValidToken();
     }
 
+    // True when the logged in user carries the admin role
+    public isAdmin(): boolean {
+        return this.isLoggedIn() && this.getCurrentUser().role === 'admin';
+    }
+
     // Retrieve the current user. This function should only be called
     // after the calling method has checked to make sure that the user
     // isLoggedIn.
     public getCurrentUser(): User {
         const token: string = this.getToken();
-        const { email, name } = JSON.parse(atob(token.split('.')[1]));
-        return { email, name } as User;
+        const { email, name, role } = JSON.parse(atob(token.split('.')[1]));
+        return { email, name, role } as User;
     }
 
     // Login method that leverages the login method in tripDataService.

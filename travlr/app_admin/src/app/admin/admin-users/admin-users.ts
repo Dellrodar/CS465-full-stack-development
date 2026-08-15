@@ -25,7 +25,7 @@ export class AdminUsers implements OnInit {
       return this.users();
     }
     return this.users().filter(user =>
-      [user.name, user.email].some(value => value?.toLowerCase().includes(q))
+      [user.name, user.email, user.role].some(value => value?.toLowerCase().includes(q))
     );
   });
 
