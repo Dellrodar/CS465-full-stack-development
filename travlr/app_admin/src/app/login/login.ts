@@ -45,7 +45,7 @@ export class Login {
 
     // console.log('Login::doLogin');
     // console.log(this.credentials);
-    this.authenticationService.login(newUser, this.credentials.password);
+    this.authenticationService.login(newUser, this.credentials.password).subscribe();
 
     if (this.authenticationService.isLoggedIn()) {
       // console.log('Router::Direct');

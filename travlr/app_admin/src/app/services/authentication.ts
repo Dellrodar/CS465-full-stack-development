@@ -1,4 +1,5 @@
 import { Inject, Injectable, signal } from '@angular/core';
+import { Observable, tap } from 'rxjs';
 import { BROWSER_STORAGE } from '../storage';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
@@ -78,42 +79,28 @@ export class Authentication {
         return { email, name } as User;
     }
 
-    // Login method that leverages the login method in tripDataService
-    // Because that method returns an observable, we subscribe to the
-    // result and only process when the Observable condition is satisfied
-    public login(user: User, passwd: string): void {
-        this.tripDataService.login(user, passwd)
-            .subscribe({
-                next: (value: AuthResponse) => {
-                    if (value) {
-                        console.log(value);
-                        this.authResp = value;
-                        this.saveToken(this.authResp.token);
-                    }
-                },
-                error: (error: any) => {
-                    console.log('Error: ' + error);
-                }
-            });
+    // Login method that leverages the login method in tripDataService.
+    // The token is saved as a side effect and the Observable is returned
+    // so callers can react to success or failure
+    public login(user: User, passwd: string): Observable<AuthResponse> {
+        return this.tripDataService.login(user, passwd)
+            .pipe(tap((value: AuthResponse) => this.handleAuthResponse(value)));
     }
 
     // Register method that leverages the register method in
     // tripDataService. This method is nearly identical to the
     // login method because the behavior of the API logs a new user in
     // immediately upon registration
-    public register(user: User, passwd: string): void {
-        this.tripDataService.register(user, passwd)
-            .subscribe({
-                next: (value: AuthResponse) => {
-                    if (value) {
-                        console.log(value);
-                        this.authResp = value;
-                        this.saveToken(this.authResp.token);
-                    }
-                },
-                error: (error: any) => {
-                    console.log('Error: ' + error);
-                }
-            });
+    public register(user: User, passwd: string): Observable<AuthResponse> {
+        return this.tripDataService.register(user, passwd)
+            .pipe(tap((value: AuthResponse) => this.handleAuthResponse(value)));
+    }
+
+    // Shared handler that stores the JWT returned by login or register
+    private handleAuthResponse(value: AuthResponse): void {
+        if (value) {
+            this.authResp = value;
+            this.saveToken(this.authResp.token);
+        }
     }
 }
