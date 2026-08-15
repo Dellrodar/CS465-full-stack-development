@@ -2,6 +2,7 @@ import { Router } from 'express';
 import jwt from 'jsonwebtoken'; // Enable JSON Web Tokens
 import { tripsList, tripsFindByCode, addTrips, updateTrip, deleteTrip } from '../controllers/trips.js';
 import { register, login } from '../controllers/authentication.js';
+import { usersList } from '../controllers/users.js';
 
 // Method to authenticate our JWT
 const authenticateJWT = (req, res, next) => {
@@ -47,5 +48,8 @@ router.route('/trips').post(authenticateJWT, addTrips);
 router.route('/trips/:tripCode').get(tripsFindByCode);
 router.route('/trips/:tripCode').put(authenticateJWT, updateTrip);
 router.route('/trips/:tripCode').delete(authenticateJWT, deleteTrip);
+
+// define routes for our users endpoint
+router.route('/users').get(authenticateJWT, usersList);
 
 export default router
