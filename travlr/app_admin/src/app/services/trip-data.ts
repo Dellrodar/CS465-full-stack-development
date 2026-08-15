@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Trip } from '../models/trip';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
-import { Reservation, ReservationRequest } from '../models/reservation';
+import { AdminReservation, Reservation, ReservationRequest } from '../models/reservation';
 
 @Injectable({
     providedIn: 'root'
@@ -42,6 +42,11 @@ export class TripData {
     // Reservations for the logged in user
     getReservations(): Observable<Reservation[]> {
         return this.http.get<Reservation[]>(this.baseUrl + '/reservations');
+    }
+
+    // Every reservation with the customer for the admin site
+    getAllReservations(): Observable<AdminReservation[]> {
+        return this.http.get<AdminReservation[]>(this.baseUrl + '/reservations/all');
     }
 
     // Confirm the cart items as reservations

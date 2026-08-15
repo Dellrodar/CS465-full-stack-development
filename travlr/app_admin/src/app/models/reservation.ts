@@ -16,3 +16,8 @@ export interface ReservationRequest {
     tripCode: string;
     people: number;
 }
+
+// Reservation as seen by admins with the customer populated
+export interface AdminReservation extends Reservation {
+    user: { _id: string; name: string; email: string } | null;
+}
