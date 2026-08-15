@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Trip } from '../models/trip';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
+import { Reservation, ReservationRequest } from '../models/reservation';
 
 @Injectable({
     providedIn: 'root'
@@ -36,6 +37,21 @@ export class TripData {
     // Read only list of registered users for the admin site
     getUsers(): Observable<User[]> {
         return this.http.get<User[]>(this.baseUrl + '/users');
+    }
+
+    // Reservations for the logged in user
+    getReservations(): Observable<Reservation[]> {
+        return this.http.get<Reservation[]>(this.baseUrl + '/reservations');
+    }
+
+    // Confirm the cart items as reservations
+    createReservations(items: ReservationRequest[]): Observable<Reservation[]> {
+        return this.http.post<Reservation[]>(this.baseUrl + '/reservations', { items });
+    }
+
+    // Cancel one of the logged in user's reservations
+    cancelReservation(id: string): Observable<Reservation> {
+        return this.http.delete<Reservation>(this.baseUrl + '/reservations/' + id);
     }
 
     // Call to our /login endpoint, returns JWT
