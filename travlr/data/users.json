@@ -1,0 +1,17 @@
+[
+    {
+        "name": "Admin User",
+        "email": "admin@travlr.com",
+        "password": "Admin123!"
+    },
+    {
+        "name": "Jane Traveler",
+        "email": "jane@travlr.com",
+        "password": "Jane123!"
+    },
+    {
+        "name": "John Explorer",
+        "email": "john@travlr.com",
+        "password": "John123!"
+    }
+]
