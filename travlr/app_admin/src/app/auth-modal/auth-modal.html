@@ -1,0 +1,97 @@
+@if (modal.isOpen()) {
+    <div class="modal d-block" tabindex="-1" role="dialog" aria-modal="true"
+        aria-labelledby="authModalTitle" (click)="close()">
+        <div class="modal-dialog modal-dialog-centered" (click)="$event.stopPropagation()">
+            <div class="modal-content auth-panel">
+                <div class="modal-header border-0 pb-0">
+                    <h2 class="modal-title" id="authModalTitle">{{ isLogin() ? 'Login' : 'Sign Up' }}</h2>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="onSubmit()" novalidate>
+                        @if (formError) {
+                            <div role="alert" class="alert alert-danger py-2">{{ formError }}</div>
+                        }
+
+                        @if (isLogin()) {
+                            <div class="row mb-3 align-items-center">
+                                <label for="loginEmail" class="col-4 col-form-label text-end">Email:</label>
+                                <div class="col-8">
+                                    <input #firstInput type="email" class="form-control" id="loginEmail" name="email"
+                                        autocomplete="email" [(ngModel)]="credentials.email">
+                                </div>
+                            </div>
+                            <div class="row mb-3 align-items-center">
+                                <label for="loginPassword" class="col-4 col-form-label text-end">Password:</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" id="loginPassword" name="password"
+                                        autocomplete="current-password" [(ngModel)]="credentials.password">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 offset-4 d-flex align-items-center gap-3">
+                                    <button type="submit" class="btn btn-primary" [disabled]="submitting">Login</button>
+                                    <a href="#" (click)="stayHere($event)">Forgot password?</a>
+                                </div>
+                            </div>
+                        } @else {
+                            <div class="row mb-3 align-items-center">
+                                <label for="signupName" class="col-4 col-form-label text-end">* Name:</label>
+                                <div class="col-8">
+                                    <input #firstInput type="text" class="form-control" id="signupName" name="name"
+                                        autocomplete="name" [(ngModel)]="credentials.name">
+                                </div>
+                            </div>
+                            <div class="row mb-3 align-items-center">
+                                <label for="signupEmail" class="col-4 col-form-label text-end">* Email:</label>
+                                <div class="col-8">
+                                    <input type="email" class="form-control" id="signupEmail" name="email"
+                                        autocomplete="email" [(ngModel)]="credentials.email">
+                                </div>
+                            </div>
+                            <div class="row mb-3 align-items-center">
+                                <label for="signupPassword" class="col-4 col-form-label text-end">* Password:</label>
+                                <div class="col-8 d-flex align-items-center gap-2">
+                                    <input type="password" class="form-control" id="signupPassword" name="password"
+                                        autocomplete="new-password" [(ngModel)]="credentials.password">
+                                    <span class="password-hint" title="Use at least 8 characters" aria-label="Password requirements">?</span>
+                                </div>
+                            </div>
+                            <div class="row mb-3 align-items-center">
+                                <label for="signupConfirm" class="col-4 col-form-label text-end">* Re-type password:</label>
+                                <div class="col-8">
+                                    <input type="password" class="form-control" id="signupConfirm" name="confirmPassword"
+                                        autocomplete="new-password" [(ngModel)]="credentials.confirmPassword">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-8 offset-4 form-check ps-0">
+                                    <input type="checkbox" class="form-check-input ms-0 me-2" id="signupAgree" name="agreed"
+                                        [(ngModel)]="credentials.agreed">
+                                    <label class="form-check-label" for="signupAgree">
+                                        I agree to the <a href="#" (click)="stayHere($event)">Terms of Use</a>
+                                        and <a href="#" (click)="stayHere($event)">Privacy Policy</a>.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 offset-4 d-flex align-items-center gap-3">
+                                    <button type="submit" class="btn btn-primary" [disabled]="submitting">Sign up</button>
+                                    <a href="#" (click)="stayHere($event)">Learn more</a>
+                                </div>
+                            </div>
+                        }
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0 justify-content-center">
+                    @if (isLogin()) {
+                        <small>Need an account? <a href="#" (click)="switchTo('signup', $event)">Sign up</a></small>
+                    } @else {
+                        <small>Already have an account? <a href="#" (click)="switchTo('login', $event)">Log in</a></small>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-backdrop show"></div>
+}
