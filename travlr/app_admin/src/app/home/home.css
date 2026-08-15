@@ -1,0 +1,8 @@
+.destination .card-img {
+    height: 260px;
+    object-fit: cover;
+}
+
+.destination .card-img-overlay {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent 60%);
+}
