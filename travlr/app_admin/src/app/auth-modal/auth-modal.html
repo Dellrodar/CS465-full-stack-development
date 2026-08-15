@@ -15,67 +15,69 @@
 
                         @if (isLogin()) {
                             <div class="row mb-3 align-items-center">
-                                <label for="loginEmail" class="col-4 col-form-label text-end">Email:</label>
-                                <div class="col-8">
+                                <label for="loginEmail" class="col-5 col-form-label text-end text-nowrap">Email:</label>
+                                <div class="col-7">
                                     <input #firstInput type="email" class="form-control" id="loginEmail" name="email"
                                         autocomplete="email" [(ngModel)]="credentials.email">
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
-                                <label for="loginPassword" class="col-4 col-form-label text-end">Password:</label>
-                                <div class="col-8">
+                                <label for="loginPassword" class="col-5 col-form-label text-end text-nowrap">Password:</label>
+                                <div class="col-7">
                                     <input type="password" class="form-control" id="loginPassword" name="password"
                                         autocomplete="current-password" [(ngModel)]="credentials.password">
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-8 offset-4 d-flex align-items-center gap-3">
+                                <div class="col-7 offset-5 d-flex align-items-center gap-3">
                                     <button type="submit" class="btn btn-primary" [disabled]="submitting">Login</button>
                                     <a href="#" (click)="stayHere($event)">Forgot password?</a>
                                 </div>
                             </div>
                         } @else {
                             <div class="row mb-3 align-items-center">
-                                <label for="signupName" class="col-4 col-form-label text-end">* Name:</label>
-                                <div class="col-8">
+                                <label for="signupName" class="col-5 col-form-label text-end text-nowrap">* Name:</label>
+                                <div class="col-7">
                                     <input #firstInput type="text" class="form-control" id="signupName" name="name"
                                         autocomplete="name" [(ngModel)]="credentials.name">
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
-                                <label for="signupEmail" class="col-4 col-form-label text-end">* Email:</label>
-                                <div class="col-8">
+                                <label for="signupEmail" class="col-5 col-form-label text-end text-nowrap">* Email:</label>
+                                <div class="col-7">
                                     <input type="email" class="form-control" id="signupEmail" name="email"
                                         autocomplete="email" [(ngModel)]="credentials.email">
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
-                                <label for="signupPassword" class="col-4 col-form-label text-end">* Password:</label>
-                                <div class="col-8 d-flex align-items-center gap-2">
+                                <label for="signupPassword" class="col-5 col-form-label text-end text-nowrap">* Password:</label>
+                                <div class="col-7 d-flex align-items-center gap-2">
                                     <input type="password" class="form-control" id="signupPassword" name="password"
                                         autocomplete="new-password" [(ngModel)]="credentials.password">
                                     <span class="password-hint" title="Use at least 8 characters" aria-label="Password requirements">?</span>
                                 </div>
                             </div>
                             <div class="row mb-3 align-items-center">
-                                <label for="signupConfirm" class="col-4 col-form-label text-end">* Re-type password:</label>
-                                <div class="col-8">
+                                <label for="signupConfirm" class="col-5 col-form-label text-end text-nowrap">* Re-type password:</label>
+                                <div class="col-7">
                                     <input type="password" class="form-control" id="signupConfirm" name="confirmPassword"
                                         autocomplete="new-password" [(ngModel)]="credentials.confirmPassword">
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-8 offset-4 form-check ps-0">
-                                    <input type="checkbox" class="form-check-input ms-0 me-2" id="signupAgree" name="agreed"
-                                        [(ngModel)]="credentials.agreed">
-                                    <label class="form-check-label" for="signupAgree">
-                                        I agree to the <a href="#" (click)="stayHere($event)">Terms of Use</a>
-                                        and <a href="#" (click)="stayHere($event)">Privacy Policy</a>.
-                                    </label>
+                                <div class="col-7 offset-5">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="signupAgree" name="agreed"
+                                            [(ngModel)]="credentials.agreed">
+                                        <label class="form-check-label" for="signupAgree">
+                                            I agree to the <a href="#" (click)="stayHere($event)">Terms of Use</a>
+                                            and <a href="#" (click)="stayHere($event)">Privacy Policy</a>.
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-8 offset-4 d-flex align-items-center gap-3">
+                                <div class="col-7 offset-5 d-flex align-items-center gap-3">
                                     <button type="submit" class="btn btn-primary" [disabled]="submitting">Sign up</button>
                                     <a href="#" (click)="stayHere($event)">Learn more</a>
                                 </div>

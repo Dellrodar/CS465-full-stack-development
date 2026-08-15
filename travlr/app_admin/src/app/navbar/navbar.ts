@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { Authentication } from '../services/authentication';
+import { AuthModal } from '../services/auth-modal';
 
 @Component({
   selector: 'app-navbar',
@@ -13,10 +14,15 @@ export class Navbar {
   constructor(
     private authenticationService: Authentication,
     private router: Router,
+    private authModal: AuthModal,
   ) {}
 
   public isLoggedIn(): boolean {
     return this.authenticationService.isLoggedIn();
+  }
+
+  public openLogin(): void {
+    this.authModal.open('login');
   }
 
   public onLogout(): void {

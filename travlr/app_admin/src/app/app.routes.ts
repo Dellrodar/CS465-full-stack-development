@@ -7,7 +7,6 @@ import { Checkout } from './checkout/checkout';
 import { Admin } from './admin/admin';
 import { AddTrip } from './add-trip/add-trip';
 import { EditTrip } from './edit-trip/edit-trip';
-import { Login } from './login/login';
 import { authGuard } from './utils/auth.guard';
 
 export const routes: Routes = [{
@@ -36,9 +35,6 @@ export const routes: Routes = [{
 }, {
     path: 'edit-trip',
     component: EditTrip,
-}, {
-    path: 'login',
-    component: Login,
 }, {
     path: '**',
     redirectTo: '',
