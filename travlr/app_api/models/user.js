@@ -19,7 +19,9 @@ const userSchema = new Schema({
         default: 'user'
     },
     hash: String,
-    salt: String
+    salt: String,
+    // Reservations made by this user
+    reservations: [{ type: Schema.Types.ObjectId, ref: 'reservations' }]
 });
 
 // Method to set the password on this record.
