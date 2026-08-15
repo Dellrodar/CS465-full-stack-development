@@ -43,12 +43,12 @@
     grid-column: 2;
 }
 
-.auth-hint-row {
-    position: relative;
+
+/* Sign up uses a wider column with shorter password fields per the wireframe */
+.auth-grid-wide {
+    grid-template-columns: max-content 20rem;
 }
 
-.auth-hint-row .password-hint {
-    position: absolute;
-    left: 100%;
-    margin-left: 0.5rem;
+.auth-grid .auth-short {
+    width: 13rem;
 }

@@ -8,7 +8,7 @@
                     <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
                 </div>
                 <div class="modal-body">
-                    <form (ngSubmit)="onSubmit()" novalidate class="auth-grid">
+                    <form (ngSubmit)="onSubmit()" novalidate class="auth-grid" [class.auth-grid-wide]="!isLogin()">
                         @if (formError) {
                             <div role="alert" class="alert alert-danger py-2">{{ formError }}</div>
                         }
@@ -33,12 +33,12 @@
                                         autocomplete="email" [(ngModel)]="credentials.email">
                             <label for="signupPassword" class="col-form-label auth-label">* Password:</label>
                             <div class="d-flex align-items-center gap-2 auth-hint-row">
-                                <input type="password" class="form-control" id="signupPassword" name="password"
+                                <input type="password" class="form-control auth-short" id="signupPassword" name="password"
                                         autocomplete="new-password" [(ngModel)]="credentials.password">
                                 <span class="password-hint" title="Use at least 8 characters" aria-label="Password requirements">?</span>
                             </div>
                             <label for="signupConfirm" class="col-form-label auth-label">* Re-type password:</label>
-                            <input type="password" class="form-control" id="signupConfirm" name="confirmPassword"
+                            <input type="password" class="form-control auth-short" id="signupConfirm" name="confirmPassword"
                                         autocomplete="new-password" [(ngModel)]="credentials.confirmPassword">
                             <div class="auth-field form-check text-nowrap">
                                 <input type="checkbox" class="form-check-input" id="signupAgree" name="agreed"
