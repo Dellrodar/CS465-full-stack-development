@@ -5,6 +5,9 @@ import { News } from './news/news';
 import { Reservations } from './reservations/reservations';
 import { Checkout } from './checkout/checkout';
 import { Admin } from './admin/admin';
+import { AdminReservations } from './admin/admin-reservations/admin-reservations';
+import { AdminUsers } from './admin/admin-users/admin-users';
+import { AdminSettings } from './admin/admin-settings/admin-settings';
 import { AddTrip } from './add-trip/add-trip';
 import { EditTrip } from './edit-trip/edit-trip';
 import { authGuard } from './utils/auth.guard';
@@ -29,6 +32,18 @@ export const routes: Routes = [{
 }, {
     path: 'admin',
     component: Admin,
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: [{
+        path: 'reservations',
+        component: AdminReservations,
+    }, {
+        path: 'users',
+        component: AdminUsers,
+    }, {
+        path: 'settings',
+        component: AdminSettings,
+    }],
 }, {
     path: 'add-trip',
     component: AddTrip,
