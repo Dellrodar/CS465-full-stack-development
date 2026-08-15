@@ -1,6 +1,8 @@
-<div>
-    <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
-</div>
+@if (isLoggedIn()) {
+    <div>
+        <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
+    </div>
+}
 <div class="row">
     @for (trip of trips(); track trip.name) {
         <div class="col-md-4">

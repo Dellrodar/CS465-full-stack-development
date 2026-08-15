@@ -7,9 +7,9 @@ const tripsList = async(req, res) => {
     const query = await Model
         .find({})
         .exec();
-    
+
     if (!query) {
-        return res.status(404).json(err);
+        return res.status(404).json({ message: 'No trips found' });
     } else {
         return res.status(200).json(query);
     }
@@ -39,9 +39,9 @@ const tripsFindByCode = async(req, res) => {
     const query = await Model
         .find({ 'code': req.params.tripCode })
         .exec();
-    
-    if (!query) {
-        return res.status(404).json(err);
+
+    if (!query || query.length === 0) {
+        return res.status(404).json({ message: 'Trip not found with code ' + req.params.tripCode });
     } else {
         return res.status(200).json(query);
     }
@@ -69,6 +69,8 @@ const updateTrip = async(req, res) => {
                 perPerson: req.body.perPerson,
                 image: req.body.image,
                 description: req.body.description,
+            }, {
+                new: true // Return the updated document instead of the original
             })
             .exec();
 

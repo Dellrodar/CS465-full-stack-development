@@ -2,6 +2,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Trip } from '../models/trip';
+import { Authentication } from '../services/authentication';
 
 
 @Component({
@@ -13,10 +14,17 @@ import { Trip } from '../models/trip';
 export class TripCard implements OnInit {
   @Input('trip') trip: any;
   
-  constructor(private router: Router) {}
-  
+  constructor(
+    private router: Router,
+    private authenticationService: Authentication,
+  ) {}
+
   ngOnInit(): void {
-    
+
+  }
+
+  public isLoggedIn(): boolean {
+    return this.authenticationService.isLoggedIn();
   }
 
   public editTrip(trip: Trip) {

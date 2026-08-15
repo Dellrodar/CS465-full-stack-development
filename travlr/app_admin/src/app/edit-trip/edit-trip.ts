@@ -51,16 +51,21 @@ export class EditTrip implements OnInit {
     this.tripService.getTrips(tripCode)
       .subscribe({
         next: (value: any) => {
-          this.trip = value;
-          // Populate our record into the form
-          this.editForm.patchValue(value[0]);
-          if (!value) {
+          if (!value || !value[0]) {
             this.message = 'No Trip Retrieved!';
-          } else {
-            this.message = 'Trip: ' + tripCode + ' retrieved';
-          }
             console.log(this.message);
-          },
+            return;
+          }
+          this.trip = value[0];
+          // Populate our record into the form
+          // Date inputs only accept yyyy-MM-dd so trim the ISO timestamp
+          this.editForm.patchValue({
+            ...value[0],
+            start: String(value[0].start).split('T')[0],
+          });
+          this.message = 'Trip: ' + tripCode + ' retrieved';
+          console.log(this.message);
+        },
           error: (error: any) => {
             console.log('Error: ' + error);
           }
