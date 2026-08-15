@@ -1,2 +1,58 @@
 <h1>Reservations</h1>
-<p class="text-muted">Your reservations will appear here.</p>
+<p class="text-muted">Your booked trips. Cancelled reservations stay in the list for your records.</p>
+
+@if (message()) {
+    <div role="alert" class="alert alert-danger py-2">{{ message() }}</div>
+}
+
+@if (loading()) {
+    <p class="text-muted">Loading your reservations…</p>
+} @else if (reservations().length === 0) {
+    <div class="text-center text-muted py-5 border rounded">
+        <p class="mb-2">You have no reservations yet.</p>
+        <a routerLink="/travel" class="btn btn-outline-primary">Browse trips</a>
+    </div>
+} @else {
+    <div class="table-responsive">
+        <table class="table table-hover align-middle reservation-table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Trip</th>
+                    <th scope="col">Start</th>
+                    <th scope="col" class="text-end">People</th>
+                    <th scope="col" class="text-end">Per Person</th>
+                    <th scope="col" class="text-end">Total</th>
+                    <th scope="col">Booked on</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"><span class="visually-hidden">Actions</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (reservation of reservations(); track reservation._id) {
+                    <tr [class.text-muted]="reservation.status === 'cancelled'">
+                        <td>
+                            <div class="fw-semibold">{{ reservation.tripName }}</div>
+                            <div class="small">{{ reservation.tripCode }}</div>
+                        </td>
+                        <td>{{ reservation.start | date:'MMM d, y':'UTC' }}</td>
+                        <td class="text-end">{{ reservation.people }}</td>
+                        <td class="text-end">{{ reservation.perPerson | currency:'USD':'symbol' }}</td>
+                        <td class="text-end">{{ reservation.total | currency:'USD':'symbol' }}</td>
+                        <td>{{ reservation.createdAt | date:'MMM d, y' }}</td>
+                        <td>
+                            <span class="badge" [class.text-bg-success]="reservation.status === 'confirmed'"
+                                [class.text-bg-secondary]="reservation.status === 'cancelled'">
+                                {{ reservation.status }}
+                            </span>
+                        </td>
+                        <td class="text-end">
+                            @if (reservation.status === 'confirmed') {
+                                <button type="button" class="btn btn-outline-danger btn-sm" (click)="cancel(reservation)">Cancel</button>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
