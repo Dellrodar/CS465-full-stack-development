@@ -16,3 +16,39 @@
     cursor: help;
     flex-shrink: 0;
 }
+
+/* Centered block of label and input pairs like the wireframe */
+.auth-grid {
+    display: grid;
+    grid-template-columns: max-content 16rem;
+    column-gap: 0.75rem;
+    row-gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-grid .alert {
+    grid-column: 1 / -1;
+    margin-bottom: 0;
+}
+
+.auth-label {
+    text-align: right;
+    white-space: nowrap;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.auth-field {
+    grid-column: 2;
+}
+
+.auth-hint-row {
+    position: relative;
+}
+
+.auth-hint-row .password-hint {
+    position: absolute;
+    left: 100%;
+    margin-left: 0.5rem;
+}
