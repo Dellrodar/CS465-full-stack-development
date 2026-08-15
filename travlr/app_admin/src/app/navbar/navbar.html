@@ -1,24 +1,57 @@
-<nav class="navbar navbar-expand navbar-light bg-light">
-    <a class="navbar-brand" href="#"><img src="assets/images/logo.png" alt="Travlr Getaways"></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse"
-        data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-link active" routerLink="">Trips<span class="sr-only">(current)</span></a>
+<nav class="navbar navbar-expand-md bg-light border-bottom mb-3" aria-label="Main navigation">
+    <div class="container-fluid">
+        <a class="navbar-brand" routerLink="/">
+            <img src="assets/images/logo.png" alt="Travlr Getaways" height="48">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#mainNav" aria-controls="mainNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav ms-auto align-items-md-center">
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/travel" routerLinkActive="active" ariaCurrentWhenActive="page">Travel</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/news" routerLinkActive="active" ariaCurrentWhenActive="page">News</a>
+                </li>
+                @if (isLoggedIn()) {
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/reservations" routerLinkActive="active" ariaCurrentWhenActive="page">Reservations</a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/admin" routerLinkActive="active" ariaCurrentWhenActive="page">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-1" routerLink="/checkout" routerLinkActive="active" ariaCurrentWhenActive="page">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                        </svg>
+                        Checkout
+                    </a>
+                </li>
+                @if (!isLoggedIn()) {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-1" routerLink="/login" routerLinkActive="active" ariaCurrentWhenActive="page">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                            Login
+                        </a>
+                    </li>
+                } @else {
+                    <li class="nav-item">
+                        <button type="button" class="nav-link btn btn-link d-flex align-items-center gap-1 p-0 py-2 px-md-2" (click)="onLogout()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+                            </svg>
+                            Log Out
+                        </button>
+                    </li>
+                }
+            </ul>
         </div>
-    </div>
-    <div class="navbar-end">
-        @if (!isLoggedIn()) {
-            <a class="nav-item" routerLink="login">
-                <span class="has-icon-left">Log In</span>
-            </a>
-        } @else {
-            <a class="nav-item active" (click)="onLogout()">
-                <span class="has-icon-left">Log Out</span>
-            </a>
-        }
     </div>
 </nav>
