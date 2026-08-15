@@ -10,8 +10,6 @@ import { TripForm } from './admin/trip-form/trip-form';
 import { AdminReservations } from './admin/admin-reservations/admin-reservations';
 import { AdminUsers } from './admin/admin-users/admin-users';
 import { AdminSettings } from './admin/admin-settings/admin-settings';
-import { AddTrip } from './add-trip/add-trip';
-import { EditTrip } from './edit-trip/edit-trip';
 import { authGuard } from './utils/auth.guard';
 
 export const routes: Routes = [{
@@ -59,12 +57,6 @@ export const routes: Routes = [{
         path: 'settings',
         component: AdminSettings,
     }],
-}, {
-    path: 'add-trip',
-    component: AddTrip,
-}, {
-    path: 'edit-trip',
-    component: EditTrip,
 }, {
     path: '**',
     redirectTo: '',
