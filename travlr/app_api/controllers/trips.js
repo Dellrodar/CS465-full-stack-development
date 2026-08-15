@@ -70,7 +70,7 @@ const updateTrip = async(req, res) => {
                 image: req.body.image,
                 description: req.body.description,
             }, {
-                new: true // Return the updated document instead of the original
+                returnDocument: 'after' // Return the updated document instead of the original
             })
             .exec();
 
