@@ -1,0 +1,57 @@
+/* Wireframe header: one bordered bar, logo cell on the left, then
+   equal width link cells separated by vertical dividers */
+.navbar > .container {
+    border: 1px solid #333;
+    border-radius: 2px;
+    padding: 0;
+    background: #fff;
+}
+
+.brand-cell {
+    padding: 0.5rem 1.25rem;
+    border-right: 1px solid #333;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-toggler {
+    margin-right: 0.5rem;
+}
+
+.nav-cells .nav-item {
+    flex: 1 1 0;
+}
+
+.nav-cells .nav-item + .nav-item {
+    border-left: 1px solid #333;
+}
+
+.nav-cells .nav-link {
+    padding: 0.75rem 0.5rem;
+    color: #0d6efd;
+    text-decoration: underline;
+    font-size: 1.05rem;
+}
+
+.nav-cells .nav-link.active {
+    font-weight: 600;
+    text-decoration: none;
+    background: #f1f3f5;
+}
+
+.nav-cells .nav-link:hover {
+    background: #f8f9fa;
+}
+
+/* Stack the cells and use horizontal dividers when collapsed */
+@media (max-width: 767.98px) {
+    .brand-cell {
+        border-right: 0;
+    }
+
+    .nav-cells .nav-item + .nav-item {
+        border-left: 0;
+        border-top: 1px solid #333;
+    }
+}
