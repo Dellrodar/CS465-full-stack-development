@@ -11,5 +11,11 @@
         </p>
         <p class="card-text" [innerHTML]="trip.description">
         </p>
+        <div class="d-flex align-items-center gap-2">
+            <button type="button" class="btn btn-primary" (click)="reserve(trip)">Reserve</button>
+            @if (added()) {
+                <span class="text-success small">Added to checkout</span>
+            }
+        </div>
     </div>
 </div>

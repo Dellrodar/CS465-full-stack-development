@@ -1,5 +1,7 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
+import { Trip } from '../models/trip';
+import { Cart } from '../services/cart';
 
 // Public trip card shown on the customer travel listing
 @Component({
@@ -10,4 +12,15 @@ import { Component, Input } from '@angular/core';
 })
 export class TripCard {
   @Input('trip') trip: any;
+
+  // Briefly true after Reserve is pressed to acknowledge the add
+  added = signal<boolean>(false);
+
+  constructor(private cart: Cart) {}
+
+  public reserve(trip: Trip): void {
+    this.cart.add(trip);
+    this.added.set(true);
+    setTimeout(() => this.added.set(false), 1500);
+  }
 }
