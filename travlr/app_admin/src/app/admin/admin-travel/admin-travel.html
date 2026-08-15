@@ -1,0 +1,71 @@
+<h1 class="admin-title">Travel</h1>
+<div class="d-flex align-items-baseline gap-4 mb-3">
+    <h2 class="h4 mb-0">Trip List</h2>
+    <a routerLink="/">&lt; Back to Home</a>
+</div>
+
+@if (message()) {
+    <div role="alert" class="alert alert-danger py-2">{{ message() }}</div>
+}
+
+<div class="d-flex justify-content-end align-items-center gap-3 mb-2">
+    <div class="input-group search-box">
+        <span class="input-group-text" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+        </span>
+        <input type="search" class="form-control" placeholder="search travel" aria-label="Search trips"
+            [value]="query()" (input)="onSearch($any($event.target).value)">
+    </div>
+    <a routerLink="new" class="btn btn-outline-dark">Add a Trip</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle trip-table">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Length</th>
+                <th scope="col">Start</th>
+                <th scope="col">Resort</th>
+                <th scope="col">Per Person</th>
+                <th scope="col" class="text-end"><span class="visually-hidden">Actions</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (trip of pageTrips(); track trip.code) {
+                <tr>
+                    <td>{{ trip.code }}</td>
+                    <td>{{ trip.name }}</td>
+                    <td>{{ trip.length }}</td>
+                    <td>{{ trip.start | date:'MMM d, y':'UTC' }}</td>
+                    <td>{{ trip.resort }}</td>
+                    <td>{{ trip.perPerson | currency:'USD':'symbol' }}</td>
+                    <td class="text-end text-nowrap">
+                        <a [routerLink]="[trip.code]">Edit</a>
+                        <button type="button" class="btn btn-link p-0 ms-2 delete-btn" (click)="deleteTrip(trip)"
+                            [attr.aria-label]="'Delete ' + trip.name" title="Delete">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="7" class="text-center text-muted py-4">
+                        @if (query()) { No trips match "{{ query() }}" } @else { No trips found }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-end align-items-center gap-3">
+    <button type="button" class="btn btn-link p-0" (click)="previous()" [disabled]="page() === 0">&lsaquo; previous</button>
+    <span class="text-muted small">Page {{ page() + 1 }} of {{ pageCount() }}</span>
+    <button type="button" class="btn btn-link p-0" (click)="next()" [disabled]="page() >= pageCount() - 1">next &rsaquo;</button>
+</div>

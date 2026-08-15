@@ -1,0 +1,21 @@
+.admin-title {
+    color: #6c757d;
+    font-weight: 300;
+}
+
+.search-box {
+    max-width: 320px;
+}
+
+.trip-table tbody tr:hover {
+    background-color: #cfe2ff;
+}
+
+.delete-btn {
+    color: #0d6efd;
+    line-height: 1;
+}
+
+.delete-btn:hover {
+    color: #b02a37;
+}

@@ -5,6 +5,7 @@ import { News } from './news/news';
 import { Reservations } from './reservations/reservations';
 import { Checkout } from './checkout/checkout';
 import { Admin } from './admin/admin';
+import { AdminTravel } from './admin/admin-travel/admin-travel';
 import { AdminReservations } from './admin/admin-reservations/admin-reservations';
 import { AdminUsers } from './admin/admin-users/admin-users';
 import { AdminSettings } from './admin/admin-settings/admin-settings';
@@ -35,6 +36,13 @@ export const routes: Routes = [{
     canActivate: [authGuard],
     canActivateChild: [authGuard],
     children: [{
+        path: '',
+        redirectTo: 'travel',
+        pathMatch: 'full',
+    }, {
+        path: 'travel',
+        component: AdminTravel,
+    }, {
         path: 'reservations',
         component: AdminReservations,
     }, {
