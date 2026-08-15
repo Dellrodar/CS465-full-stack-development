@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'; // Enable JSON Web Tokens
 import { tripsList, tripsFindByCode, addTrips, updateTrip, deleteTrip } from '../controllers/trips.js';
 import { register, login } from '../controllers/authentication.js';
 import { usersList } from '../controllers/users.js';
-import { reservationsCreate, reservationsList, reservationCancel } from '../controllers/reservations.js';
+import { reservationsCreate, reservationsList, reservationsListAll, reservationCancel } from '../controllers/reservations.js';
 
 // Method to authenticate our JWT
 const authenticateJWT = (req, res, next) => {
@@ -64,6 +64,7 @@ router.route('/users').get(authenticateJWT, requireAdmin, usersList);
 // define routes for our reservations endpoint
 router.route('/reservations').get(authenticateJWT, reservationsList);
 router.route('/reservations').post(authenticateJWT, reservationsCreate);
+router.route('/reservations/all').get(authenticateJWT, requireAdmin, reservationsListAll);
 router.route('/reservations/:id').delete(authenticateJWT, reservationCancel);
 
 export default router

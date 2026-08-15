@@ -70,17 +70,35 @@ const reservationsList = async (req, res) => {
     }
 };
 
-// DELETE: /reservations/:id - Cancels one of the logged in user's reservations
+// GET: /reservations/all - Lists every reservation with the customer for admins
+const reservationsListAll = async (req, res) => {
+    try {
+        const query = await Reservation
+            .find({})
+            .populate('user', 'name email')
+            .sort({ createdAt: -1 })
+            .exec();
+        return res.status(200).json(query);
+    } catch (err) {
+        return res.status(400).json(err);
+    }
+};
+
+// DELETE: /reservations/:id - Cancels a reservation
+// Users may only cancel their own while admins may cancel any
 // The record is kept with a cancelled status so history is preserved
 const reservationCancel = async (req, res) => {
     const id = req.params.id;
     if (!mongoose.isValidObjectId(id)) {
         return res.status(400).json({ message: 'Invalid reservation id' });
     }
+    const filter = req.auth.role === 'admin'
+        ? { _id: id }
+        : { _id: id, user: req.auth._id };
     try {
         const query = await Reservation
             .findOneAndUpdate(
-                { _id: id, user: req.auth._id },
+                filter,
                 { status: 'cancelled' },
                 { returnDocument: 'after' }
             )
@@ -94,11 +112,9 @@ const reservationCancel = async (req, res) => {
     }
 };
 
-// TODO admin: GET /reservations/all listing every reservation with the
-// user populated behind requireAdmin is planned as a follow up
-
 export {
     reservationsCreate,
     reservationsList,
+    reservationsListAll,
     reservationCancel,
 };
