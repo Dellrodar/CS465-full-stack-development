@@ -2,16 +2,19 @@
     {
         "name": "Admin User",
         "email": "admin@travlr.com",
-        "password": "Admin123!"
+        "password": "Admin123!",
+        "role": "admin"
     },
     {
         "name": "Jane Traveler",
         "email": "jane@travlr.com",
-        "password": "Jane123!"
+        "password": "Jane123!",
+        "role": "user"
     },
     {
         "name": "John Explorer",
         "email": "john@travlr.com",
-        "password": "John123!"
+        "password": "John123!",
+        "role": "user"
     }
 ]

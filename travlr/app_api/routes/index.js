@@ -36,6 +36,14 @@ const authenticateJWT = (req, res, next) => {
     });
 };
 
+// Method to require the admin role on top of a valid JWT
+const requireAdmin = (req, res, next) => {
+    if (req.auth?.role === 'admin') {
+        return next();
+    }
+    return res.status(403).json({ message: 'Admin access required' });
+};
+
 const router = Router();
 
 // define routes for our authentication endpoints
@@ -44,12 +52,12 @@ router.route('/login').post(login);
 
 // define routes for our trips endpoint
 router.route('/trips').get(tripsList);
-router.route('/trips').post(authenticateJWT, addTrips);
+router.route('/trips').post(authenticateJWT, requireAdmin, addTrips);
 router.route('/trips/:tripCode').get(tripsFindByCode);
-router.route('/trips/:tripCode').put(authenticateJWT, updateTrip);
-router.route('/trips/:tripCode').delete(authenticateJWT, deleteTrip);
+router.route('/trips/:tripCode').put(authenticateJWT, requireAdmin, updateTrip);
+router.route('/trips/:tripCode').delete(authenticateJWT, requireAdmin, deleteTrip);
 
 // define routes for our users endpoint
-router.route('/users').get(authenticateJWT, usersList);
+router.route('/users').get(authenticateJWT, requireAdmin, usersList);
 
 export default router

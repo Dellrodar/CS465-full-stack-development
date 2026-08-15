@@ -17,9 +17,10 @@ const seedTrips = async () => {
 // upsert the test users by email so seeding never removes real accounts
 // and always leaves known logins available
 const seedUsers = async () => {
-    for (const { name, email, password } of users) {
+    for (const { name, email, password, role } of users) {
         const user = await User.findOne({ email }).exec() ?? new User({ email });
         user.name = name;
+        user.role = role ?? 'user';
         user.setPassword(password);
         await user.save();
     }
