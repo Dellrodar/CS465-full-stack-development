@@ -35,6 +35,10 @@ export class TripListing implements OnInit {
     return this.authenticationService.isLoggedIn();
   }
 
+  public onTripDeleted(deleted: Trip): void {
+    this.trips.update(list => list.filter(trip => trip.code !== deleted.code));
+  }
+
   private getStuff(): void {
     this.tripDataService.getTrips()
       .subscribe({

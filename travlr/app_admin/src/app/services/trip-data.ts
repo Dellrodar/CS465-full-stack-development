@@ -27,6 +27,10 @@ export class TripData {
         return this.http.put<Trip>(this.tripsUrl + '/' + formData.code, formData);
     };
 
+    deleteTrip(tripCode: string): Observable<{ message: string }> {
+        return this.http.delete<{ message: string }>(this.tripsUrl + '/' + tripCode);
+    }
+
     // Call to our /login endpoint, returns JWT
     login(user: User, passwd: string): Observable<AuthResponse> {
         // console.log('Inside TripData::login');
