@@ -42,7 +42,7 @@ export class AddTrip implements OnInit {
         .subscribe({
           next: (data: any) => {
             console.log(data);
-            this.router.navigate(['']);
+            this.router.navigate(['travel']);
           },
           error: (error: any) => {
             console.log('Error: ' + error);
