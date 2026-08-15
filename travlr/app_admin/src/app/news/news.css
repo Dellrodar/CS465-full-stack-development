@@ -1,0 +1,72 @@
+/* Echo the original template's news styling on the Bootstrap grid */
+.news-page h1,
+.news-page h2,
+.news-page h3 {
+    font-family: "Times New Roman", Times, serif;
+    text-transform: uppercase;
+}
+
+.news-page h1 {
+    color: #316e66;
+    font-size: 30px;
+    margin-bottom: 18px;
+}
+
+.news-page h2 {
+    color: #316e66;
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.news-image {
+    border: 1px solid #2c9688;
+    margin-bottom: 20px;
+}
+
+.news-time {
+    display: block;
+    color: #5a4535;
+    font: 15px/24px "Times New Roman", Times, serif;
+    margin-bottom: 30px;
+}
+
+.news-article p {
+    color: #5a4535;
+    font-size: 15px;
+    line-height: 30px;
+}
+
+.news-sidebar h3 {
+    color: #2c9688;
+    font-size: 20px;
+    font-weight: normal;
+    border-top: 1px solid #b7b7b7;
+    margin: 0 0 12px;
+    padding-top: 18px;
+}
+
+.news-sidebar h3:first-child {
+    border-top: 0;
+    padding-top: 0;
+}
+
+.news-sidebar li {
+    margin-bottom: 12px;
+}
+
+.news-sidebar a {
+    color: #5a4535;
+    text-decoration: none;
+}
+
+.news-sidebar a:hover {
+    color: #917157;
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
+    .news-article {
+        border-right: 1px solid #bbbbbb;
+        padding-right: 2rem;
+    }
+}
