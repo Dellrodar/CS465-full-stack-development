@@ -23,9 +23,11 @@ export class TripData {
         return this.http.post<Trip>(this.tripsUrl, formData);
     }
 
-    updateTrip(formData: Trip): Observable<Trip> {
-        return this.http.put<Trip>(this.tripsUrl + '/' + formData.code, formData);
-    };
+    // Update a trip. The optional code identifies the existing record so
+    // the trip code itself can be changed by the caller
+    updateTrip(formData: Trip, code: string = formData.code): Observable<Trip> {
+        return this.http.put<Trip>(this.tripsUrl + '/' + code, formData);
+    }
 
     deleteTrip(tripCode: string): Observable<{ message: string }> {
         return this.http.delete<{ message: string }>(this.tripsUrl + '/' + tripCode);

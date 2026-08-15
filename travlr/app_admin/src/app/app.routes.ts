@@ -6,6 +6,7 @@ import { Reservations } from './reservations/reservations';
 import { Checkout } from './checkout/checkout';
 import { Admin } from './admin/admin';
 import { AdminTravel } from './admin/admin-travel/admin-travel';
+import { TripForm } from './admin/trip-form/trip-form';
 import { AdminReservations } from './admin/admin-reservations/admin-reservations';
 import { AdminUsers } from './admin/admin-users/admin-users';
 import { AdminSettings } from './admin/admin-settings/admin-settings';
@@ -42,6 +43,12 @@ export const routes: Routes = [{
     }, {
         path: 'travel',
         component: AdminTravel,
+    }, {
+        path: 'travel/new',
+        component: TripForm,
+    }, {
+        path: 'travel/:tripCode',
+        component: TripForm,
     }, {
         path: 'reservations',
         component: AdminReservations,

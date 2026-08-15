@@ -1,0 +1,108 @@
+<h1 class="admin-title">{{ isEdit ? 'Edit Trip' : 'Add Trip' }}</h1>
+
+@if (form) {
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="trip-form">
+        <fieldset class="trip-fieldset">
+            <legend>Trip Details</legend>
+
+            @if (formError) {
+                <div role="alert" class="alert alert-danger py-2">{{ formError }}</div>
+            }
+
+            <div class="row mb-3 align-items-center">
+                <label for="code" class="col-sm-3 col-form-label text-sm-end">ID:</label>
+                <div class="col-sm-3">
+                    <input type="text" id="code" formControlName="code" class="form-control"
+                        placeholder="e.g. GALR210214" [class.is-invalid]="submitted && f['code'].invalid">
+                    <div class="invalid-feedback">ID is required</div>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <label for="name" class="col-sm-3 col-form-label text-sm-end">Destination:</label>
+                <div class="col-sm-7">
+                    <input type="text" id="name" formControlName="name" class="form-control"
+                        placeholder="e.g. Gale Reef" [class.is-invalid]="submitted && f['name'].invalid">
+                    <div class="invalid-feedback">Destination is required</div>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center" formGroupName="length">
+                <span class="col-sm-3 col-form-label text-sm-end" id="lengthLabel">Length of Stay:</span>
+                <div class="col-sm-7 d-flex align-items-center gap-2 flex-wrap">
+                    <input type="number" id="nights" formControlName="nights" min="0" class="form-control spinner"
+                        aria-labelledby="lengthLabel nightsLabel"
+                        [class.is-invalid]="submitted && lengthGroup.controls['nights'].invalid">
+                    <label for="nights" id="nightsLabel" class="me-3">Nights</label>
+                    <input type="number" id="days" formControlName="days" min="0" class="form-control spinner"
+                        aria-labelledby="lengthLabel daysLabel"
+                        [class.is-invalid]="submitted && lengthGroup.controls['days'].invalid">
+                    <label for="days" id="daysLabel">Days</label>
+                    @if (submitted && lengthGroup.invalid) {
+                        <div class="invalid-feedback d-block w-100">Nights and Days must be zero or more</div>
+                    }
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <label for="start" class="col-sm-3 col-form-label text-sm-end">Start Date:</label>
+                <div class="col-sm-3">
+                    <input type="date" id="start" formControlName="start" class="form-control"
+                        [class.is-invalid]="submitted && f['start'].invalid">
+                    <div class="invalid-feedback">Start Date is required</div>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <label for="resort" class="col-sm-3 col-form-label text-sm-end">Resort:</label>
+                <div class="col-sm-7">
+                    <input type="text" id="resort" formControlName="resort" class="form-control"
+                        placeholder="e.g. Emerald Bay, 3 stars" [class.is-invalid]="submitted && f['resort'].invalid">
+                    <div class="invalid-feedback">Resort is required</div>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <label for="perPerson" class="col-sm-3 col-form-label text-sm-end">Per Person:</label>
+                <div class="col-sm-3">
+                    <div class="input-group" [class.is-invalid]="submitted && f['perPerson'].invalid">
+                        <span class="input-group-text">$</span>
+                        <input type="number" id="perPerson" formControlName="perPerson" min="0" step="0.01"
+                            class="form-control" placeholder="0.00" [class.is-invalid]="submitted && f['perPerson'].invalid">
+                    </div>
+                    <div class="invalid-feedback">Per Person is required and must be zero or more</div>
+                </div>
+            </div>
+
+            <div class="row mb-3 align-items-center">
+                <label for="image" class="col-sm-3 col-form-label text-sm-end">Image:</label>
+                <div class="col-sm-4">
+                    <input type="text" id="image" formControlName="image" list="tripImages" class="form-control"
+                        placeholder="e.g. reef1.jpg" [class.is-invalid]="submitted && f['image'].invalid">
+                    <datalist id="tripImages">
+                        @for (image of images; track image) {
+                            <option [value]="image"></option>
+                        }
+                    </datalist>
+                    <div class="invalid-feedback">Image is required</div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="description" class="col-sm-3 col-form-label text-sm-end">Description:</label>
+                <div class="col-sm-7">
+                    <textarea id="description" formControlName="description" rows="4" class="form-control"
+                        placeholder="Describe the trip" [class.is-invalid]="submitted && f['description'].invalid"></textarea>
+                    <div class="invalid-feedback">Description is required</div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-7 offset-sm-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary" [disabled]="saving">Save</button>
+                    <a routerLink="/admin/travel" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+}
