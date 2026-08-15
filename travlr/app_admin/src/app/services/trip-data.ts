@@ -33,6 +33,11 @@ export class TripData {
         return this.http.delete<{ message: string }>(this.tripsUrl + '/' + tripCode);
     }
 
+    // Read only list of registered users for the admin site
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.baseUrl + '/users');
+    }
+
     // Call to our /login endpoint, returns JWT
     login(user: User, passwd: string): Observable<AuthResponse> {
         // console.log('Inside TripData::login');

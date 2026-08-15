@@ -1,2 +1,54 @@
-<h1>Users</h1>
-<p class="text-muted">Administration for users will appear here.</p>
+<h1 class="admin-title">Users</h1>
+<div class="d-flex align-items-baseline gap-4 mb-3">
+    <h2 class="h4 mb-0">User List</h2>
+    <a routerLink="/">&lt; Back to Home</a>
+</div>
+
+@if (message()) {
+    <div role="alert" class="alert alert-danger py-2">{{ message() }}</div>
+}
+
+<div class="d-flex justify-content-end align-items-center gap-3 mb-2">
+    <div class="input-group search-box">
+        <span class="input-group-text" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+        </span>
+        <input type="search" class="form-control" placeholder="search users" aria-label="Search users"
+            [value]="query()" (input)="onSearch($any($event.target).value)">
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle user-table">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (user of pageUsers(); track user._id) {
+                <tr>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td class="text-muted small">{{ user._id }}</td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="3" class="text-center text-muted py-4">
+                        @if (query()) { No users match "{{ query() }}" } @else { No users found }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-end align-items-center gap-3">
+    <button type="button" class="btn btn-link p-0" (click)="previous()" [disabled]="page() === 0">&lsaquo; previous</button>
+    <span class="text-muted small">Page {{ page() + 1 }} of {{ pageCount() }}</span>
+    <button type="button" class="btn btn-link p-0" (click)="next()" [disabled]="page() >= pageCount() - 1">next &rsaquo;</button>
+</div>
