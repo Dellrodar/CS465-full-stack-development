@@ -1,4 +1,7 @@
 docker/data/
 travlr/node_modules/
+travlr/app_admin/node_modules/
+travlr/app_admin/dist/
+travlr/app_admin/.angular/
 node_modules/
 npm-debug.log*
