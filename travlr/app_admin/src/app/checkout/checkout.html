@@ -1,0 +1,68 @@
+<h1>Checkout</h1>
+<p class="text-muted">Choose how many people are travelling on each trip, then confirm your reservation. No payment is collected.</p>
+
+@if (message()) {
+    <div role="alert" class="alert alert-danger py-2">{{ message() }}</div>
+}
+
+@if (cart.count() === 0) {
+    <div class="text-center text-muted py-5 border rounded">
+        <p class="mb-2">Your cart is empty.</p>
+        <a routerLink="/travel" class="btn btn-outline-primary">Browse trips</a>
+    </div>
+} @else {
+    <div class="table-responsive">
+        <table class="table align-middle checkout-table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Trip</th>
+                    <th scope="col">Start</th>
+                    <th scope="col" class="text-end">Per Person</th>
+                    <th scope="col">People</th>
+                    <th scope="col" class="text-end">Total</th>
+                    <th scope="col"><span class="visually-hidden">Remove</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (item of cart.items(); track item.tripCode) {
+                    <tr>
+                        <td>
+                            <div class="fw-semibold">{{ item.name }}</div>
+                            <div class="text-muted small">{{ item.tripCode }}</div>
+                        </td>
+                        <td>{{ item.start | date:'MMM d, y':'UTC' }}</td>
+                        <td class="text-end">{{ item.perPerson | currency:'USD':'symbol' }}</td>
+                        <td>
+                            <input type="number" min="1" step="1" class="form-control people-input"
+                                [value]="item.people" (change)="setPeople(item.tripCode, $any($event.target).value)"
+                                [attr.aria-label]="'People for ' + item.name">
+                        </td>
+                        <td class="text-end">{{ item.perPerson * item.people | currency:'USD':'symbol' }}</td>
+                        <td class="text-end">
+                            <button type="button" class="btn btn-link p-0 text-danger" (click)="remove(item.tripCode)"
+                                [attr.aria-label]="'Remove ' + item.name" title="Remove">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="4" class="text-end">Grand Total</th>
+                    <th class="text-end">{{ cart.total() | currency:'USD':'symbol' }}</th>
+                    <th></th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+        <a routerLink="/travel" class="btn btn-outline-secondary">Keep browsing</a>
+        <button type="button" class="btn btn-primary" (click)="confirm()" [disabled]="submitting()">
+            Confirm Reservation
+        </button>
+    </div>
+}

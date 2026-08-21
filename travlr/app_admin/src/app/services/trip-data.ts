@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Trip } from '../models/trip';
 import { User } from '../models/user';
 import { AuthResponse } from '../models/auth-response';
+import { AdminReservation, Reservation, ReservationRequest } from '../models/reservation';
 
 @Injectable({
     providedIn: 'root'
@@ -23,12 +24,39 @@ export class TripData {
         return this.http.post<Trip>(this.tripsUrl, formData);
     }
 
-    updateTrip(formData: Trip): Observable<Trip> {
-        return this.http.put<Trip>(this.tripsUrl + '/' + formData.code, formData);
-    };
+    // Update a trip. The optional code identifies the existing record so
+    // the trip code itself can be changed by the caller
+    updateTrip(formData: Trip, code: string = formData.code): Observable<Trip> {
+        return this.http.put<Trip>(this.tripsUrl + '/' + code, formData);
+    }
 
     deleteTrip(tripCode: string): Observable<{ message: string }> {
         return this.http.delete<{ message: string }>(this.tripsUrl + '/' + tripCode);
+    }
+
+    // Read only list of registered users for the admin site
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(this.baseUrl + '/users');
+    }
+
+    // Reservations for the logged in user
+    getReservations(): Observable<Reservation[]> {
+        return this.http.get<Reservation[]>(this.baseUrl + '/reservations');
+    }
+
+    // Every reservation with the customer for the admin site
+    getAllReservations(): Observable<AdminReservation[]> {
+        return this.http.get<AdminReservation[]>(this.baseUrl + '/reservations/all');
+    }
+
+    // Confirm the cart items as reservations
+    createReservations(items: ReservationRequest[]): Observable<Reservation[]> {
+        return this.http.post<Reservation[]>(this.baseUrl + '/reservations', { items });
+    }
+
+    // Cancel one of the logged in user's reservations
+    cancelReservation(id: string): Observable<Reservation> {
+        return this.http.delete<Reservation>(this.baseUrl + '/reservations/' + id);
     }
 
     // Call to our /login endpoint, returns JWT

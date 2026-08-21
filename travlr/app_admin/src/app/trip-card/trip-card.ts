@@ -1,53 +1,26 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, Input, signal } from '@angular/core';
 import { Trip } from '../models/trip';
-import { Authentication } from '../services/authentication';
-import { TripData } from '../services/trip-data';
+import { Cart } from '../services/cart';
 
-
+// Public trip card shown on the customer travel listing
 @Component({
   selector: 'app-trip-card',
   imports: [CommonModule, CurrencyPipe],
   templateUrl: './trip-card.html',
   styleUrl: './trip-card.css',
 })
-export class TripCard implements OnInit {
+export class TripCard {
   @Input('trip') trip: any;
-  @Output() deleted = new EventEmitter<Trip>();
 
-  constructor(
-    private router: Router,
-    private authenticationService: Authentication,
-    private tripDataService: TripData,
-  ) {}
+  // Briefly true after Reserve is pressed to acknowledge the add
+  added = signal<boolean>(false);
 
-  ngOnInit(): void {
+  constructor(private cart: Cart) {}
 
-  }
-
-  public isLoggedIn(): boolean {
-    return this.authenticationService.isLoggedIn();
-  }
-
-  public editTrip(trip: Trip) {
-    localStorage.removeItem('tripCode');
-    localStorage.setItem('tripCode', trip.code);
-    this.router.navigate(['edit-trip']);
-  }
-
-  public deleteTrip(trip: Trip) {
-    if (!confirm('Delete trip "' + trip.name + '"?')) {
-      return;
-    }
-    this.tripDataService.deleteTrip(trip.code)
-      .subscribe({
-        next: () => {
-          this.deleted.emit(trip);
-        },
-        error: (error: any) => {
-          console.log('Error: ' + error);
-        }
-      });
+  public reserve(trip: Trip): void {
+    this.cart.add(trip);
+    this.added.set(true);
+    setTimeout(() => this.added.set(false), 1500);
   }
 }

@@ -1,0 +1,85 @@
+<h1 class="admin-title">Reservations</h1>
+<div class="d-flex align-items-baseline gap-4 mb-3">
+    <h2 class="h4 mb-0">Reservation List</h2>
+    <a routerLink="/">&lt; Back to Home</a>
+</div>
+
+@if (message()) {
+    <div role="alert" class="alert alert-danger py-2">{{ message() }}</div>
+}
+
+<div class="d-flex justify-content-end align-items-center gap-3 mb-2 flex-wrap">
+    <select class="form-select status-select" aria-label="Filter by status"
+        [value]="status()" (change)="onStatus($any($event.target).value)">
+        <option value="all">All statuses</option>
+        <option value="confirmed">Confirmed</option>
+        <option value="cancelled">Cancelled</option>
+    </select>
+    <div class="input-group search-box">
+        <span class="input-group-text" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+            </svg>
+        </span>
+        <input type="search" class="form-control" placeholder="search reservations" aria-label="Search reservations"
+            [value]="query()" (input)="onSearch($any($event.target).value)">
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle reservation-table">
+        <thead class="table-light">
+            <tr>
+                <th scope="col">Customer</th>
+                <th scope="col">Trip</th>
+                <th scope="col">Start</th>
+                <th scope="col" class="text-end">People</th>
+                <th scope="col" class="text-end">Total</th>
+                <th scope="col">Booked on</th>
+                <th scope="col">Status</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (reservation of pageRows(); track reservation._id) {
+                <tr [class.text-muted]="reservation.status === 'cancelled'">
+                    <td>
+                        <div class="fw-semibold">{{ reservation.user?.name || 'Unknown user' }}</div>
+                        <div class="small">{{ reservation.user?.email }}</div>
+                    </td>
+                    <td>
+                        <div>{{ reservation.tripName }}</div>
+                        <div class="small">{{ reservation.tripCode }}</div>
+                    </td>
+                    <td>{{ reservation.start | date:'MMM d, y':'UTC' }}</td>
+                    <td class="text-end">{{ reservation.people }}</td>
+                    <td class="text-end">{{ reservation.total | currency:'USD':'symbol' }}</td>
+                    <td>{{ reservation.createdAt | date:'MMM d, y' }}</td>
+                    <td>
+                        <span class="badge" [class.text-bg-success]="reservation.status === 'confirmed'"
+                            [class.text-bg-secondary]="reservation.status === 'cancelled'">
+                            {{ reservation.status }}
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        @if (reservation.status === 'confirmed') {
+                            <button type="button" class="btn btn-outline-danger btn-sm" (click)="cancel(reservation)">Cancel</button>
+                        }
+                    </td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="8" class="text-center text-muted py-4">
+                        @if (query() || status() !== 'all') { No reservations match the current filter } @else { No reservations yet }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="d-flex justify-content-end align-items-center gap-3">
+    <button type="button" class="btn btn-link p-0" (click)="previous()" [disabled]="page() === 0">&lsaquo; previous</button>
+    <span class="text-muted small">Page {{ page() + 1 }} of {{ pageCount() }}</span>
+    <button type="button" class="btn btn-link p-0" (click)="next()" [disabled]="page() >= pageCount() - 1">next &rsaquo;</button>
+</div>

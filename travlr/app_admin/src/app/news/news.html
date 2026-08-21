@@ -1,0 +1,21 @@
+<div class="row g-4 news-page">
+    <article class="col-md-8 news-article">
+        <h1>News</h1>
+        <img class="img-fluid news-image" src="assets/images/{{ article.image }}" alt="{{ article.title }}">
+        <h2>{{ article.title }}</h2>
+        <span class="news-time">{{ article.date }}<br>by: {{ article.author }}</span>
+        @for (paragraph of article.paragraphs; track $index) {
+            <p>{{ paragraph }}</p>
+        }
+    </article>
+    <aside class="col-md-4 news-sidebar">
+        @for (section of sections; track section.heading) {
+            <h3>{{ section.heading }}</h3>
+            <ul class="list-unstyled">
+                @for (item of section.items; track item) {
+                    <li><a href="#" (click)="stayHere($event)">{{ item }}</a></li>
+                }
+            </ul>
+        }
+    </aside>
+</div>
