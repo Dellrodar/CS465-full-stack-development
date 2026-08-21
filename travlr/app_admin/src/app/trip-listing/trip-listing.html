@@ -1,10 +1,12 @@
-<div>
-    <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
-</div>
+@if (isLoggedIn()) {
+    <div>
+        <button (click)="addTrip()" class="btn btn-info">Add Trip</button>
+    </div>
+}
 <div class="row">
     @for (trip of trips(); track trip.name) {
         <div class="col-md-4">
-            <app-trip-card [trip]="trip" class="card-deck mt-2"></app-trip-card>
+            <app-trip-card [trip]="trip" (deleted)="onTripDeleted($event)" class="card-deck mt-2"></app-trip-card>
         </div>
     }
 </div>
